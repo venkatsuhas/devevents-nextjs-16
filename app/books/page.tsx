@@ -1,12 +1,19 @@
+interface IBook {
+    id: number | string;
+    title: string;
+    author: string;
+    year: number | string;
+}
+
 async function Books() {
     const response = await fetch("http://localhost:3000/api/books");
-    const books = await response.json();
+    const books: IBook[] = await response.json();
 
     return (
         <div className="p-8">
             <h1 className="text-2xl font-bold mb-4">Books</h1>
             <ul className="space-y-4">
-                {books.map((book: any) => (
+                {books.map((book: IBook) => (
                     <li key={book.id} className="border p-4 rounded-lg shadow-sm">
                         <h2 className="text-xl font-semibold">{book.title}</h2>
                         <p className="text-gray-600">by {book.author}</p>
