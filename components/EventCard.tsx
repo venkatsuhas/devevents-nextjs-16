@@ -19,6 +19,7 @@ const EventCard = ({ title, description, poster, date, time, location }: EventPr
                     src={poster} 
                     alt={title} 
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="poster"
                 />
             </div>
@@ -27,15 +28,15 @@ const EventCard = ({ title, description, poster, date, time, location }: EventPr
             
             <div className="datetime">
                 <div>
-                    <Image src="/icons/calendar.svg" alt="calendar" width={16} height={16} className="icon-image" />
+                    <Image src="/icons/calendar.svg" alt="calendar" width={16} height={16} style={{ width: 'auto', height: 'auto' }} className="icon-image" />
                     <span>{date}</span>
                 </div>
                 <div>
-                    <Image src="/icons/clock.svg" alt="clock" width={16} height={16} className="icon-image" />
+                    <Image src="/icons/clock.svg" alt="clock" width={16} height={16} style={{ width: 'auto', height: 'auto' }} className="icon-image" />
                     <span>{time}</span>
                 </div>
                 <div>
-                    <Image src="/icons/pin.svg" alt="location" width={16} height={16} className="icon-image" />
+                    <Image src="/icons/pin.svg" alt="location" width={16} height={16} style={{ width: 'auto', height: 'auto' }} className="icon-image" />
                     <span>{location}</span>
                 </div>
             </div>
