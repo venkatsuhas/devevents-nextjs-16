@@ -61,7 +61,7 @@ const eventSchema = new Schema<IEvent>(
     },
     mode: {
       type: String,
-      enum: ['online', 'offline', 'hybrid'],
+      enum: ['online', 'offline', 'hybrid', 'Hybrid (In-Person & Online)'],
       required: [true, 'Mode is required'],
     },
     audience: {
@@ -96,7 +96,7 @@ const eventSchema = new Schema<IEvent>(
 
 // Generate URL-friendly slug from title before saving
 eventSchema.pre<IEvent>('save', async function () {
-  if (this.isModified('title')) {
+  if (this.isModified('title') && !this.slug) {
     this.slug = this.title
       .toLowerCase()
       .trim()
@@ -107,11 +107,17 @@ eventSchema.pre<IEvent>('save', async function () {
 
   // Normalize date to ISO format (YYYY-MM-DD)
   if (this.isModified('date')) {
-    const dateObj = new Date(this.date);
-    if (isNaN(dateObj.getTime())) {
-      throw new Error('Invalid date format');
+    try {
+      const dateObj = new Date(this.date);
+      if (isNaN(dateObj.getTime())) {
+        throw new Error('Invalid date format');
+      }
+      this.date = dateObj.toISOString().split('T')[0];
+    } catch (e) {
+      // If it's already in a good enough format or fails, we might want to be more lenient 
+      // but the model previously threw. Let's keep it strict but wrapped.
+      if (e instanceof Error && e.message === 'Invalid date format') throw e;
     }
-    this.date = dateObj.toISOString().split('T')[0];
   }
 
   // Normalize time to HH:MM format
@@ -119,6 +125,15 @@ eventSchema.pre<IEvent>('save', async function () {
     const timeRegex = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
     if (!timeRegex.test(this.time)) {
       throw new Error('Invalid time format. Use HH:MM');
+    }
+  }
+
+  // Normalize mode to lowercase and standard values if it matches user input
+  if (this.isModified('mode')) {
+    if (this.mode === 'Hybrid (In-Person & Online)') {
+      this.mode = 'hybrid' as any;
+    } else {
+      this.mode = this.mode.toLowerCase() as any;
     }
   }
 

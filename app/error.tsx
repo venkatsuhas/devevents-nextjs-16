@@ -1,7 +1,6 @@
 'use client' // Error boundaries must be Client Components
 
 import { useEffect } from 'react'
-import posthog from 'posthog-js'
 
 export default function ErrorPage({
                                       error,
@@ -13,7 +12,6 @@ export default function ErrorPage({
     useEffect(() => {
         // Log the error to an error reporting service
         console.error(error)
-        posthog.captureException(error, { digest: error.digest })
     }, [error])
 
     return (

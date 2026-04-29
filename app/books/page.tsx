@@ -5,10 +5,9 @@ interface IBook {
     year: number | string;
 }
 
-async function Books() {
-    const response = await fetch("http://localhost:3000/api/books");
-    const books: IBook[] = await response.json();
+import books from "@/app/api/db";
 
+async function Books() {
     return (
         <div className="p-8">
             <h1 className="text-2xl font-bold mb-4">Books</h1>
