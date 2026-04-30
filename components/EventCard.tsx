@@ -17,6 +17,11 @@ interface EventProps {
 const EventCard = ({ title, description, poster, image, date, time, location }: EventProps) => {
     const [imgSrc, setImgSrc] = useState(image || poster || "/images/event1.png");
 
+    const handleImageError = () => {
+        // Fallback to local images if remote fetch fails
+        setImgSrc("/images/event1.png");
+    };
+
     return (
         <div id="event-card">
             <div className="poster-container">
@@ -26,7 +31,7 @@ const EventCard = ({ title, description, poster, image, date, time, location }: 
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="poster"
-                    onError={() => setImgSrc("/images/event1.png")}
+                    onError={handleImageError}
                 />
             </div>
             
