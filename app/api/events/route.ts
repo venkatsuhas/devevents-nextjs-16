@@ -2,19 +2,6 @@ import {NextRequest,NextResponse} from 'next/server';
 import {connectToDatabase} from "../../../lib/mongodb";
 import Event from '@/database/event.model'
 
-export async function GET() {
-    try {
-        await connectToDatabase();
-        const events = await Event.find({});
-        return NextResponse.json(events);
-    } catch (e: any) {
-        return NextResponse.json({
-            message: 'Error fetching events',
-            error: e instanceof Error ? e.message : 'Unknown error'
-        }, { status: 500 });
-    }
-}
-
 export async function POST(req: NextRequest){
     try{
         await connectToDatabase();
