@@ -1,26 +1,32 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 interface EventProps {
-    id: number;
+    _id?: string;
+    id?: number | string;
     title: string;
     description: string;
-    poster: string;
+    image?: string;
+    poster?: string;
     date: string;
     time: string;
     location: string;
 }
 
-const EventCard = ({ title, description, poster, date, time, location }: EventProps) => {
+const EventCard = ({ title, description, poster, image, date, time, location }: EventProps) => {
+    const [imgSrc, setImgSrc] = useState(image || poster || "/images/event1.png");
+
     return (
         <div id="event-card">
             <div className="poster-container">
                 <Image 
-                    src={poster} 
+                    src={imgSrc} 
                     alt={title} 
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="poster"
+                    onError={() => setImgSrc("/images/event1.png")}
                 />
             </div>
             

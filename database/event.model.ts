@@ -5,12 +5,12 @@ interface IEvent extends Document {
   slug: string;
   description: string;
   overview: string;
-  image: string;
+  image?: string;
   venue: string;
   location: string;
   date: string;
   time: string;
-  mode: 'online' | 'offline' | 'hybrid';
+  mode: 'online' | 'offline' | 'hybrid' | 'Hybrid (In-Person & Online)';
   audience: string;
   agenda: string[];
   organizer: string;
@@ -41,7 +41,7 @@ const eventSchema = new Schema<IEvent>(
     },
     image: {
       type: String,
-      required: [true, 'Image URL is required'],
+      required: false,
     },
     venue: {
       type: String,
@@ -142,7 +142,6 @@ eventSchema.pre<IEvent>('save', async function () {
     'title',
     'description',
     'overview',
-    'image',
     'venue',
     'location',
     'date',
