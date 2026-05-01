@@ -1,5 +1,4 @@
-'use client'
-import React, {useState} from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -17,24 +16,24 @@ interface EventProps {
 }
 
 const EventCard = ({title, description,slug, poster, image, date, time, location}: EventProps) => {
-    const [imgSrc, setImgSrc] = useState(image || poster || "/images/event1.png");
-
-    const handleImageError = () => {
-        // Fallback to local images if remote fetch fails
-        setImgSrc("/images/event1.png");
-    };
+    // const [imgSrc, setImgSrc] = useState(image || poster || "/images/event1.png");
+    //
+    // const handleImageError = () => {
+    //     // Fallback to local images if remote fetch fails
+    //     setImgSrc("/images/event1.png");
+    // };
 
     return (
         <Link href={`/event/${slug}`} id="event-card">
             <div id="event-card">
                 <div className="poster-container">
                     <Image
-                        src={imgSrc}
+                        src={image}
                         alt={title}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="poster"
-                        onError={handleImageError}
+                        // onError={handleImageError}
                     />
                 </div>
 
