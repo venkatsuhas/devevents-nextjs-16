@@ -10,7 +10,7 @@ const EventsList = async () => {
     'use cache';
     cacheLife('hours')
     cacheTag('events');
-    const res = await fetch('/api/events')
+    const res = await fetch(`${BASE_URL}/api/events`)
     if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
     }
