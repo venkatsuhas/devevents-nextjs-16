@@ -1,6 +1,7 @@
 import {NextRequest,NextResponse} from 'next/server';
 import {connectToDatabase} from "../../../lib/mongodb";
 import Event from '@/database/event.model'
+import { revalidateTag } from 'next/cache';
 
 export async function POST(req: NextRequest){
     try{
@@ -38,6 +39,7 @@ export async function POST(req: NextRequest){
         try {
             // console.log('Attempting to create event with slug:', eventData.slug || 'auto-generated');
             createdEvent = await Event.create(eventData);
+            revalidateTag('events', createdEvent);
         } catch (e: any) {
             // console.log('Initial create failed, error code:', e.code);
             // Handle MongoDB duplicate key error (code 11000)

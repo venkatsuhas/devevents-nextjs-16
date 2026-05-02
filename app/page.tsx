@@ -1,10 +1,15 @@
 import React, { Suspense } from 'react'
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
+import {cacheLife} from "next/cache";
+import { cacheTag } from 'next/cache';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 const EventsList = async () => {
+    'use cache';
+    cacheLife('hours')
+    cacheTag('events');
     const res = await fetch(`${BASE_URL}/api/events`, { cache: 'no-store' })
     const {events} = await res.json()
     
