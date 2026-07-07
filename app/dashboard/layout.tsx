@@ -3,7 +3,7 @@ import React from 'react'
 const Layout = ({children}: {children:React.ReactNode}) => {
     return (
         <div>
-            Dashboard Layout
+            Dashboard Layout!!
             {children}
         </div>
     )
