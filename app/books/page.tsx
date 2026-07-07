@@ -16,7 +16,7 @@ async function Books() {
                     <li key={book.id} className="border p-4 rounded-lg shadow-sm">
                         <h2 className="text-xl font-semibold">{book.title}</h2>
                         <p className="text-gray-600">by {book.author}</p>
-                        <p className="text-sm text-gray-400">Published: {book.year}</p>
+                        <p className="text-sm text-gray-400">Published : {book.year}</p>
                     </li>
                 ))}
             </ul>
