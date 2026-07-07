@@ -1,5 +1,12 @@
 name: Test & Deploy Project
-on: push
+on:
+  pull_request:
+    branches:
+      - main                  
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   first-job:
     runs-on: ubuntu-latest
@@ -13,6 +20,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
   deploy:
+    # To run jobs sequential
+    # needs: first-job
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -27,3 +36,15 @@ jobs:
         run: npm run build
       - name: Deploy
         run: echo "Deploying ..."
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Branch name: $BRANCH"
+          if [[ ! "$BRANCH" == feature/* ]]; then
+            echo "❌ Branch '$BRANCH' is not allowed. Only feature/* branches can be merged."
+            exit 1
+          fi
+          echo "✅ Branch name is valid."
