@@ -3,7 +3,7 @@ import React from 'react'
 const Dashboard = () => {
     // throw new Error("Dashboard Error")
     return (
-        <div>Dashboard</div>
+        <div>Dashboard Welcome</div>
     )
 }
 export default Dashboard
